@@ -7,6 +7,10 @@ var stand1,stand2,ground,block1,block2,block3,block4,block5,block6,block7,block8
 
 var score=0;
 
+function preload() {
+
+}
+
 function setup() {
 	createCanvas(1500, 500);
 
@@ -48,13 +52,17 @@ function setup() {
 }
 
 function draw() {
-    background(56,44,44);
+    // background(56,44,44);
+
+    clear();
+
+    bg();
 
     Engine.update(engine);
 
     textSize(20);
     text("Score: "+score,750,40);
-
+    
     stand1.display();
     stand2.display();
     block1.display();
@@ -110,7 +118,6 @@ function draw() {
     block23.score();
     block24.score();
     block25.score();
-
 }
 
 function mouseDragged() {
@@ -124,5 +131,21 @@ function mouseReleased() {
 function keyPressed(){
     if(keyCode === 32){
       slingShot.attach(polygon.body);
+    }
+}
+
+async function bg() {
+    var response = await fetch("http://worldtimeapi.org/api/timezone/Asia/Kolkata");
+    var responseJSON = await response.json();
+
+    var datetime = responseJSON.datetime;
+    var hour = datetime.slice(11,13);
+    var hour = 20
+
+    if(hour>=06 && hour<=19){
+        background(56,44,44)        
+    }
+    else{
+        background(0);    
     }
 }
